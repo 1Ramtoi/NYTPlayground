@@ -1,0 +1,29 @@
+ext {
+    daggerVersion = '2.40.1'
+
+
+    hiltDependencies = [
+            hilt: "com.google.dagger:hilt-android:${daggerVersion}"
+    ]
+
+    hiltProcessing = [
+            hiltCompiler: "com.google.dagger:hilt-compiler:${daggerVersion}"
+    ]
+
+    daggerProcessing = [
+            daggerCompiler: "com.google.dagger:dagger-compiler:${daggerVersion}",
+    ]
+
+//    daggerDependencies = [
+//            dagger: "com.google.dagger:dagger:${daggerVersion}",
+//    ]
+//
+//    daggerAndroidDependencies = [
+//            daggerAndroid: "com.google.dagger:dagger-android:${daggerVersion}",
+//            daggerSupport: "com.google.dagger:dagger-android-support:${daggerVersion}"
+//    ]
+//
+//    daggerAndroidProcessing = [
+//            daggerProcessor: "com.google.dagger:dagger-android-processor:${daggerVersion}"
+//    ]
+}
