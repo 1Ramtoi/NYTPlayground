@@ -3,6 +3,7 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.7">
       <module name="NYT_Playground.app" target="11" />
+      <module name="NYT_Playground.domain" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

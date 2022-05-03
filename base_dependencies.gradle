@@ -1,29 +1,105 @@
 ext {
-    daggerVersion = '2.40.1'
+    kotlinCoroutinesVersion = '1.6.1'
+    androidAnnotationVersion = '1.3.0'
+    androidActivityVersion = '1.4.0'
+    composeActivityVersion = '1.4.0'
+    lifecycleVersion = '2.4.0'
+    navigationVersion = '2.3.5'
+    hiltNavigationVersion = '1.0.0'
 
+    //Network
+    ktorVersion = '1.6.8' //2.0.1, 1.6.8
+
+    composeDependencies = [
+            compiler            : "androidx.compose.compiler:compiler:$composeVersion",
+            composeUi           : "androidx.compose.ui:ui:${composeVersion}",
+            composeMaterial     : "androidx.compose.material:material:${composeVersion}",
+            composeTooling      : "androidx.compose.ui:ui-tooling:${composeVersion}",
+            composeActivity     : "androidx.activity:activity-compose:${composeActivityVersion}",
+            composeFoundation   : "androidx.compose.foundation:foundation:${composeVersion}",
+            composeIcons        : "androidx.compose.material:material-icons-core:${composeVersion}",
+            composeIconsExtended: "androidx.compose.material:material-icons-extended:${composeVersion}",
+            navigationCompose: "androidx.navigation:navigation-compose:${navigationVersion}",
+            navigationHilt:  "androidx.hilt:hilt-navigation-compose:${hiltNavigationVersion}"
+
+    ]
+
+    androidLifecycleDependencies = [
+            viewModelCompose: "androidx.lifecycle:lifecycle-viewmodel-compose:2.4.1",
+    ]
+
+    archDependencie = [
+            lifecycleKtx: "androidx.lifecycle:lifecycle-runtime-ktx:${lifecycleVersion}"
+    ]
+
+    archProcessing = [
+            archCompiler: "androidx.lifecycle:lifecycle-compiler:${lifecycleVersion}",
+    ]
+
+    liveDataDependencies = [
+            liveDataKtx: "androidx.lifecycle:lifecycle-livedata-ktx:${lifecycleVersion}"
+    ]
+
+    viewModelDependencies = [
+            viewModelKtx: "androidx.lifecycle:lifecycle-viewmodel-ktx:${lifecycleVersion}"
+    ]
+
+    navigationDependencies = [
+            navigationFragment: "androidx.navigation:navigation-fragment-ktx:${navigationVersion}",
+            navigationUi      : "androidx.navigation:navigation-ui-ktx:${navigationVersion}",
+    ]
 
     hiltDependencies = [
-            hilt: "com.google.dagger:hilt-android:${daggerVersion}"
+            hilt: "com.google.dagger:hilt-android:${daggerVersion}",
     ]
 
     hiltProcessing = [
-            hiltCompiler: "com.google.dagger:hilt-compiler:${daggerVersion}"
+            hiltCompiler: "com.google.dagger:hilt-compiler:${daggerVersion}",
+    ]
+
+    hiltAndroidProcessing = [
+            compiler: 'androidx.hilt:hilt-compiler:1.0.0'
     ]
 
     daggerProcessing = [
             daggerCompiler: "com.google.dagger:dagger-compiler:${daggerVersion}",
     ]
 
-//    daggerDependencies = [
-//            dagger: "com.google.dagger:dagger:${daggerVersion}",
-//    ]
-//
-//    daggerAndroidDependencies = [
-//            daggerAndroid: "com.google.dagger:dagger-android:${daggerVersion}",
-//            daggerSupport: "com.google.dagger:dagger-android-support:${daggerVersion}"
-//    ]
-//
-//    daggerAndroidProcessing = [
-//            daggerProcessor: "com.google.dagger:dagger-android-processor:${daggerVersion}"
-//    ]
+    daggerAndroidProcessing = [
+            daggerProcessor: "com.google.dagger:dagger-android-processor:${daggerVersion}"
+    ]
+
+    daggerDependencies = [
+            dagger: "com.google.dagger:dagger:${daggerVersion}",
+    ]
+
+    daggerAndroidDependencies = [
+            daggerAndroid: "com.google.dagger:dagger-android:${daggerVersion}",
+            daggerSupport: "com.google.dagger:dagger-android-support:${daggerVersion}"
+    ]
+
+    kotlinCoroutines = [
+            coroutinesCore: "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion",
+//            jdk: 'org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.6.1'
+    ]
+
+    androidKotlinCoroutines = [
+            androidCoroutinesCore: "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutinesVersion"
+    ]
+
+    annotationDependencies = [
+            annotation: "androidx.annotation:annotation:${androidAnnotationVersion}",
+    ]
+
+    ktorClient = [
+            client: "io.ktor:ktor-client-core:$ktorVersion",
+            engine: "io.ktor:ktor-client-cio:$ktorVersion",
+            androidEngine: "io.ktor:ktor-client-android:$ktorVersion",
+//            okhttp: "io.ktor:ktor-client-okhttp:$ktorVersion"
+    ]
+
+    ktorPlugins = [
+            logging: "io.ktor:ktor-client-logging:$ktorVersion",
+            serialization: "io.ktor:ktor-client-serialization:$ktorVersion"
+    ]
 }

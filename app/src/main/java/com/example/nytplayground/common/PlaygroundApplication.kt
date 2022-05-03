@@ -1,4 +1,4 @@
-package com.example.nytplayground.features
+package com.example.nytplayground.common
 
 
 import android.app.Application
