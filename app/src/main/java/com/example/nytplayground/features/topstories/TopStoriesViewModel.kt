@@ -1,27 +1,37 @@
 package com.example.nytplayground.features.topstories
 
-import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.features.model.Article
+import com.example.domain.features.model.TopStoriesSortBy
 import com.example.domain.features.usecases.topstories.ReqeustTopStoriesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class TopStoriesViewModel @Inject constructor(
     private val requestTopStoriesUseCase: ReqeustTopStoriesUseCase,
-//    @Assisted private val savedStateHandle: SavedStateHandle
-): ViewModel() {
+) : ViewModel() {
 
-    private val _topStories = mutableStateListOf<Article>()
-    val topStories: List<Article>
+    private val _topStories = MutableStateFlow<List<Article>>(listOf())
+    val topStories: StateFlow<List<Article>>
         get() = _topStories
 
-    suspend fun getTopStories() {
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean>
+        get() = _isRefreshing.asStateFlow()
+
+    fun refreshTopStories() {
         viewModelScope.launch {
-            _topStories.addAll(requestTopStoriesUseCase.invokeSuspend(null))
+            _isRefreshing.emit(true)
+            requestTopStoriesUseCase.invokeSuspend(TopStoriesSortBy.MOST_SHARED).also {
+                _topStories.emit(it)
+                _isRefreshing.emit(false)
+            }
         }
     }
 }

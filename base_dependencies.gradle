@@ -6,6 +6,7 @@ ext {
     lifecycleVersion = '2.4.0'
     navigationVersion = '2.3.5'
     hiltNavigationVersion = '1.0.0'
+    accompanistVersion = '0.23.1'
 
     //Network
     ktorVersion = '1.6.8' //2.0.1, 1.6.8
@@ -100,6 +101,10 @@ ext {
 
     ktorPlugins = [
             logging: "io.ktor:ktor-client-logging:$ktorVersion",
-            serialization: "io.ktor:ktor-client-serialization:$ktorVersion"
+            serialization: "io.ktor:ktor-client-serialization:$ktorVersion",
+    ]
+
+    accompanistDependencies = [
+            swipeToRefresh: "com.google.accompanist:accompanist-swiperefresh:$accompanistVersion"
     ]
 }

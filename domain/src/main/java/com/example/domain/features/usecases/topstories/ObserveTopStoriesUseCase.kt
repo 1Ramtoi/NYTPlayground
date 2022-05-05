@@ -10,6 +10,6 @@ class ObserveTopStoriesUseCase @Inject constructor(
     private val topStoriesRepository: TopStoriesRepository
 ): FlowUseCase<List<Article>, Void?>() {
     override fun buildStream(params: Void?): Flow<List<Article>> {
-        return topStoriesRepository.observeTopStories()
+        return topStoriesRepository.observeMostViewed()
     }
 }
