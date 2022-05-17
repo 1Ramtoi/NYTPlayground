@@ -12,6 +12,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.nytplayground.common.articles.ArticleCompactView
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
@@ -30,6 +31,7 @@ fun TopStoriesView(
     val topStories by vm.topStories.collectAsState()
 
     Scaffold(
+        modifier = Modifier.fillMaxWidth(),
         topBar = {
             TopAppBar(
                 title = {
@@ -46,13 +48,15 @@ fun TopStoriesView(
             SwipeRefresh(
                 state = rememberSwipeRefreshState(isRefreshing),
                 onRefresh = { vm.refreshTopStories() }) {
-                Column(modifier = Modifier.padding(16.dp)) {
+                Column(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth()
+                ) {
                     LazyColumn(modifier = Modifier.fillMaxHeight()) {
                         items(topStories) { article ->
-                            Row(modifier = Modifier.padding(16.dp)) {
-                                Spacer(Modifier.width(5.dp))
-                                Text(article.title)
-//                            Text(text = article.published_date)
+                            Row(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)) {
+                                ArticleCompactView(article = article)
                             }
                             Divider()
                         }

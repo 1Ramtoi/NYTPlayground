@@ -11,6 +11,9 @@ ext {
     //Network
     ktorVersion = '1.6.8' //2.0.1, 1.6.8
 
+    //Cache
+    sqldelightVersion = '1.5.3'
+
     composeDependencies = [
             compiler            : "androidx.compose.compiler:compiler:$composeVersion",
             composeUi           : "androidx.compose.ui:ui:${composeVersion}",
@@ -20,8 +23,8 @@ ext {
             composeFoundation   : "androidx.compose.foundation:foundation:${composeVersion}",
             composeIcons        : "androidx.compose.material:material-icons-core:${composeVersion}",
             composeIconsExtended: "androidx.compose.material:material-icons-extended:${composeVersion}",
-            navigationCompose: "androidx.navigation:navigation-compose:${navigationVersion}",
-            navigationHilt:  "androidx.hilt:hilt-navigation-compose:${hiltNavigationVersion}"
+            navigationCompose   : "androidx.navigation:navigation-compose:${navigationVersion}",
+            navigationHilt      : "androidx.hilt:hilt-navigation-compose:${hiltNavigationVersion}"
 
     ]
 
@@ -93,18 +96,25 @@ ext {
     ]
 
     ktorClient = [
-            client: "io.ktor:ktor-client-core:$ktorVersion",
-            engine: "io.ktor:ktor-client-cio:$ktorVersion",
+            client       : "io.ktor:ktor-client-core:$ktorVersion",
+            engine       : "io.ktor:ktor-client-cio:$ktorVersion",
             androidEngine: "io.ktor:ktor-client-android:$ktorVersion",
 //            okhttp: "io.ktor:ktor-client-okhttp:$ktorVersion"
     ]
 
     ktorPlugins = [
-            logging: "io.ktor:ktor-client-logging:$ktorVersion",
+            logging      : "io.ktor:ktor-client-logging:$ktorVersion",
             serialization: "io.ktor:ktor-client-serialization:$ktorVersion",
     ]
 
     accompanistDependencies = [
-            swipeToRefresh: "com.google.accompanist:accompanist-swiperefresh:$accompanistVersion"
+            swipeToRefresh: "com.google.accompanist:accompanist-swiperefresh:$accompanistVersion",
+            flowLayout    : "com.google.accompanist:accompanist-flowlayout:$accompanistVersion"
+    ]
+
+    sqldelight = [
+            "runtime": "com.squareup.sqldelight:runtime:$sqldelightVersion",
+//            "android": "com.squareup.sqldelight:android-driver:$sqldelightVersion",
+//            "native" : "com.squareup.sqldelight:native-driver:$sqldelightVersion",
     ]
 }
