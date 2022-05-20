@@ -7,7 +7,7 @@ import dagger.Module
 import dagger.Provides
 import io.ktor.client.*
 import io.ktor.client.engine.android.*
-//import com.squareup.sqldelight.android.AndroidSqliteDriver
+import com.squareup.sqldelight.android.AndroidSqliteDriver
 
 import io.ktor.client.features.logging.*
 import javax.inject.Singleton
@@ -26,10 +26,5 @@ class DataModule {
         }
     }
 
-    @Provides
-    @Singleton
-    fun provideSqlDriver(context: Context): SqlDriver {
-        return JbdcSqliteDriver
-//        return AndroidSqliteDriver(PLaygroundDB.Schema, context, "playground.db")
-    }
+
 }

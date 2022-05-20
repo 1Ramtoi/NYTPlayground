@@ -20,11 +20,6 @@ android {
     }
 }
 
-kotlin {
-
-}
-
-
 sqldelight {
     PLaygroundDB {
         packageName = "com.example.data.cache"

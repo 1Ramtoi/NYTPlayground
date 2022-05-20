@@ -114,7 +114,7 @@ ext {
 
     sqldelight = [
 //            "runtime": "com.squareup.sqldelight:runtime:$sqldelightVersion",
-//            "android": "com.squareup.sqldelight:android-driver:$sqldelightVersion",
+            "android": "com.squareup.sqldelight:android-driver:$sqldelightVersion",
 //            "native" : "com.squareup.sqldelight:native-driver:$sqldelightVersion",
             "sqlite-driver" : "com.squareup.sqldelight:sqlite-driver:$sqldelightVersion"
 

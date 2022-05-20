@@ -28,7 +28,7 @@ class TopStoriesViewModel @Inject constructor(
     fun refreshTopStories() {
         viewModelScope.launch {
             _isRefreshing.emit(true)
-            requestTopStoriesUseCase.invokeSuspend(TopStoriesSortBy.MOST_SHARED).also {
+            requestTopStoriesUseCase.invokeSuspend(TopStoriesSortBy.MOST_VIEWED).also {
                 _topStories.emit(it)
                 _isRefreshing.emit(false)
             }
