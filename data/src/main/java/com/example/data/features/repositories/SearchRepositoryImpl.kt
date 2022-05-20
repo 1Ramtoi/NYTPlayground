@@ -5,7 +5,7 @@ import com.example.domain.features.repositories.SearchRepository
 import javax.inject.Inject
 
 class SearchRepositoryImpl @Inject constructor(
-    val searchService: SearchService
+    private val searchService: SearchService
 ): SearchRepository {
     override suspend fun search() {
         searchService.fetchResults()
