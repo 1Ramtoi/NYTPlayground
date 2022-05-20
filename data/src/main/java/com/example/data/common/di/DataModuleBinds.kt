@@ -1,5 +1,7 @@
 package com.example.data.common.di
 
+import com.example.data.features.datasource.cache.TopStoriesCache
+import com.example.data.features.datasource.cache.TopStoriesCacheImpl
 import com.example.data.features.datasource.remote.search.SearchService
 import com.example.data.features.datasource.remote.search.SearchServiceImpl
 import com.example.data.features.datasource.remote.topstories.TopStoriesService
@@ -22,6 +24,10 @@ interface DataModuleBinds {
     @Binds
     @Singleton
     fun bindTopStoriesService(service: TopStoriesServiceImpl): TopStoriesService
+
+    @Binds
+    @Singleton
+    fun bindTopStoriesCache(cache: TopStoriesCacheImpl): TopStoriesCache
 
     @Binds
     @Singleton
