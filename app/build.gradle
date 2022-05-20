@@ -70,6 +70,8 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
 
 
+    implementation room.values()
+    kapt roomProcessing.values()
 
     // For instrumentation tests
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

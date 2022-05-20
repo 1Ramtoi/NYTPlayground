@@ -13,6 +13,7 @@ ext {
 
     //Cache
     sqldelightVersion = '1.5.3'
+    roomVersion = '2.4.2'
 
     composeDependencies = [
             compiler            : "androidx.compose.compiler:compiler:$composeVersion",
@@ -65,12 +66,13 @@ ext {
             compiler: 'androidx.hilt:hilt-compiler:1.0.0'
     ]
 
-    daggerProcessing = [
-            daggerCompiler: "com.google.dagger:dagger-compiler:${daggerVersion}",
-    ]
 
     daggerAndroidProcessing = [
             daggerProcessor: "com.google.dagger:dagger-android-processor:${daggerVersion}"
+    ]
+
+    daggerProcessing = [
+            daggerCompiler: "com.google.dagger:dagger-compiler:${daggerVersion}",
     ]
 
     daggerDependencies = [
@@ -116,5 +118,14 @@ ext {
 //            "runtime": "com.squareup.sqldelight:runtime:$sqldelightVersion",
             "android": "com.squareup.sqldelight:android-driver:$sqldelightVersion",
 //            "native" : "com.squareup.sqldelight:native-driver:$sqldelightVersion",
+    ]
+
+    room = [
+            "room" : "androidx.room:room-runtime:$roomVersion",
+            "ktx" : "androidx.room:room-ktx:$roomVersion"
+    ]
+
+    roomProcessing = [
+            "room"  : "androidx.room:room-compiler:$roomVersion"
     ]
 }

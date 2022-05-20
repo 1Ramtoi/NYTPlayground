@@ -1,20 +1,22 @@
-apply plugin: 'kotlin'
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlinx-serialization'
 
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_7
-    targetCompatibility = JavaVersion.VERSION_1_7
-}
+//java {
+//    sourceCompatibility = JavaVersion.VERSION_1_7
+//    targetCompatibility = JavaVersion.VERSION_1_7
+//}
 
-apply plugin: 'com.squareup.sqldelight'
 
-sqldelight {
-    PLaygroundDB {
-        packageName = "com.example.data.cache"
+android {
+    compileSdk 32
+
+    defaultConfig {
+        minSdk 29
+        targetSdk 32
     }
-//    linkSqlite = true
 }
 
 dependencies {
@@ -27,5 +29,6 @@ dependencies {
     implementation ktorClient.values()
     implementation ktorPlugins.values()
 
-//    implementation sqldelight.values()
+    implementation room.values()
+    kapt roomProcessing.values()
 }

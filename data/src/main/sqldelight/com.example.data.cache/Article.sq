@@ -1,6 +1,0 @@
-CREATE TABLE articles (
-    title TEXT NOT NULL
-);
-
-insertItem:
-    INSERT OR REPLACE INTO articles(title) VALUES ("placeholder title");
