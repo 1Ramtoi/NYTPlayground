@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.features.model.Article
 import com.example.domain.features.model.TopStoriesSortBy
+import com.example.domain.features.usecases.topstories.ObserveTopStoriesUseCase
 import com.example.domain.features.usecases.topstories.ReqeustTopStoriesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,6 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class TopStoriesViewModel @Inject constructor(
     private val requestTopStoriesUseCase: ReqeustTopStoriesUseCase,
+    private val observeTopStoriesUseCase: ObserveTopStoriesUseCase
 ) : ViewModel() {
 
     private val _topStories = MutableStateFlow<List<Article>>(listOf())
@@ -24,6 +26,14 @@ class TopStoriesViewModel @Inject constructor(
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing: StateFlow<Boolean>
         get() = _isRefreshing.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            observeTopStoriesUseCase.buildStream(null).collect {
+                _topStories.emit(it)
+            }
+        }
+    }
 
     fun refreshTopStories() {
         viewModelScope.launch {

@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.domain.features.model.Article
+import com.example.domain.features.model.TopStoriesSortBy
 
 @Entity(tableName = "articles")
 data class LocalArticle(
@@ -18,7 +19,11 @@ data class LocalArticle(
     var abstract: String = "",
 
     @ColumnInfo(name = "published_date")
-    var published_date: String = ""
+    var published_date: String = "",
+
+    var orderViewed: Int? = null,
+    var orderShared: Int? = null,
+    var orderEmailed: Int? = null,
 )
 
 fun LocalArticle.toArticle() = Article(
@@ -32,13 +37,25 @@ fun List<LocalArticle>.mapToArticles(): List<Article> = map {
     it.toArticle()
 }
 
-fun Article.toLocalArticle() = LocalArticle(
-    id = id,
-    title = title,
-    abstract = abstract,
-    published_date = published_date
-)
+fun Article.toLocalArticle(sortBy: TopStoriesSortBy? = null, index: Int? = null): LocalArticle {
+    val localArticle = LocalArticle(
+        id = id,
+        title = title,
+        abstract = abstract,
+        published_date = published_date,
+    )
 
-fun List<Article>.mapToLocalArticles(): List<LocalArticle> = map {
-    it.toLocalArticle()
+    when(sortBy) {
+        TopStoriesSortBy.MOST_VIEWED -> localArticle.orderViewed = index
+        TopStoriesSortBy.MOST_EMAILED -> localArticle.orderEmailed = index
+        TopStoriesSortBy.MOST_SHARED -> localArticle.orderShared = index
+        else -> {}
+    }
+
+    return localArticle
 }
+
+fun List<Article>.mapToLocalArticles(sortBy: TopStoriesSortBy? = null): List<LocalArticle> =
+    mapIndexed { index, article ->
+        article.toLocalArticle(sortBy, index)
+    }

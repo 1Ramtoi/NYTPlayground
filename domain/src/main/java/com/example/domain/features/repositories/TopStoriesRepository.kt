@@ -9,4 +9,6 @@ interface TopStoriesRepository {
     suspend fun requestMostShared(): List<Article>
 
     fun observeMostViewed(): Flow<List<Article>>
+    fun observeMostShared(): Flow<List<Article>>
+    fun observeMostEmailed(): Flow<List<Article>>
 }
