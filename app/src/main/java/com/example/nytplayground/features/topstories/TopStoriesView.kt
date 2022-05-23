@@ -24,18 +24,18 @@ fun TopStoriesView(
     // is this supposed to be here or in the viewmodel?
     val sortBy = remember { mutableStateOf(TopStoriesSortBy.MOST_VIEWED) }
 
+    val state by vm.state.collectAsState()
+
     val isRefreshing by vm.isRefreshing.collectAsState()
-    val mostViewedList by vm.mostViewed.collectAsState()
-    val mostSharedList by vm.mostShared.collectAsState()
-    val mostEmailedList by vm.mostEmailed.collectAsState()
+
 
     fun listToDisplay(): List<Article> {
         return when (sortBy.value) {
-            TopStoriesSortBy.MOST_VIEWED -> mostViewedList
-            TopStoriesSortBy.MOST_SHARED -> mostSharedList
-            TopStoriesSortBy.MOST_EMAILED -> mostEmailedList
+            TopStoriesSortBy.MOST_VIEWED -> state.mostViewed
+            TopStoriesSortBy.MOST_SHARED -> state.mostShared
+            TopStoriesSortBy.MOST_EMAILED -> state.mostEmailed
             else -> {
-                mostViewedList
+                state.mostViewed
             }
         }
     }

@@ -9,10 +9,7 @@ import com.example.data.features.datasource.remote.topstories.TopStoriesService
 import com.example.domain.features.model.Article
 import com.example.domain.features.model.TopStoriesSortBy
 import com.example.domain.features.repositories.TopStoriesRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.transform
-import kotlinx.coroutines.flow.transformLatest
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class TopStoriesRepositoryImpl @Inject constructor(
@@ -22,13 +19,14 @@ class TopStoriesRepositoryImpl @Inject constructor(
     override suspend fun requestMostViewed(): List<Article> {
         val refresh = topStoriesService.fetchTopViewed()
         topStoriesDao.insertAllReplace(refresh.mapToLocalArticles(TopStoriesSortBy.MOST_VIEWED))
-
+        println("LIST WITH ${topStoriesDao.requestAllArticles().size} ITEMS")
         return refresh
     }
 
     override suspend fun requestMostEmailed(): List<Article> {
         val refresh = topStoriesService.fetchTopEmailed()
         topStoriesDao.insertAllReplace(refresh.mapToLocalArticles(TopStoriesSortBy.MOST_EMAILED))
+        println("LIST WITH ${topStoriesDao.requestAllArticles().size} ITEMS")
 
         return refresh
     }
@@ -36,6 +34,7 @@ class TopStoriesRepositoryImpl @Inject constructor(
     override suspend fun requestMostShared(): List<Article> {
         val refresh = topStoriesService.fetchTopShared()
         topStoriesDao.insertAllReplace(refresh.mapToLocalArticles(TopStoriesSortBy.MOST_SHARED))
+        println("LIST WITH ${topStoriesDao.requestAllArticles().size} ITEMS")
 
         return refresh
     }
