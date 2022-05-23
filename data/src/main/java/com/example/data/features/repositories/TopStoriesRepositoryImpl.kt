@@ -40,7 +40,6 @@ class TopStoriesRepositoryImpl @Inject constructor(
         return refresh
     }
 
-
     // is this logic supposed to be here?
     // SQL query vs. Kotlin filter ?
     override fun observeMostViewed(): Flow<List<Article>> =
@@ -63,4 +62,20 @@ class TopStoriesRepositoryImpl @Inject constructor(
                 it.orderEmailed != null
             }.mapToArticles()
         }
+
+    override suspend fun refreshMostViewed() {
+        val refresh = topStoriesService.fetchTopViewed()
+        topStoriesDao.insertAllReplace(refresh.mapToLocalArticles(TopStoriesSortBy.MOST_VIEWED))
+    }
+
+    override suspend fun refreshMostShared() {
+        val refresh = topStoriesService.fetchTopShared()
+        topStoriesDao.insertAllReplace(refresh.mapToLocalArticles(TopStoriesSortBy.MOST_SHARED))
+
+    }
+
+    override suspend fun refreshMostEmailed() {
+        val refresh = topStoriesService.fetchTopEmailed()
+        topStoriesDao.insertAllReplace(refresh.mapToLocalArticles(TopStoriesSortBy.MOST_EMAILED))
+    }
 }

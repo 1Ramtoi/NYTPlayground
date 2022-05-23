@@ -11,4 +11,8 @@ interface TopStoriesRepository {
     fun observeMostViewed(): Flow<List<Article>>
     fun observeMostShared(): Flow<List<Article>>
     fun observeMostEmailed(): Flow<List<Article>>
+
+    suspend fun refreshMostViewed()
+    suspend fun refreshMostShared()
+    suspend fun refreshMostEmailed()
 }
