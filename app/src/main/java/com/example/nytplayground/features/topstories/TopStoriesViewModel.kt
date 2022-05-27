@@ -18,7 +18,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TopStoriesViewModel @Inject constructor(
-    private val requestTopStoriesUseCase: ReqeustTopStoriesUseCase,
     private val observeTopStoriesUseCase: ObserveTopStoriesUseCase,
     private val refreshTopStoriesUseCase: RefreshTopStoriesUseCase
 ) : BaseViewModel<TopStoriesState, TopStoriesEvent>(TopStoriesState()) {
@@ -75,7 +74,6 @@ class TopStoriesViewModel @Inject constructor(
             }
         }
     }
-
 
     fun refresh() {
         // is this the correct way of accessing the state's value?

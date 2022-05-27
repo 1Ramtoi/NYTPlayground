@@ -68,6 +68,22 @@ class TopStoriesRepositoryImpl @Inject constructor(
 
     override suspend fun refreshMostShared() {
         val refresh = topStoriesService.fetchTopShared()
+
+        val currentList = topStoriesDao.requestAllArticles()
+
+        //TODO
+//        refresh.forEach { refreshArticle ->
+//            currentList.find { localArticle ->
+//                localArticle.id == refreshArticle.id
+//            }?.let { localArticle ->
+//                localArticle.orderShared?.let {
+//                    refreshArticle
+//                }
+//
+//            }
+//
+//        }
+
         topStoriesDao.insertAllReplace(refresh.mapToLocalArticles(TopStoriesSortBy.MOST_SHARED))
 
     }

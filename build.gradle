@@ -33,6 +33,7 @@ task clean(type: Delete) {
 
 allprojects {
     apply from: "$rootDir/base_dependencies.gradle"
+    apply from: "$rootDir/base_test_dependencies.gradle"
 
     tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
         kotlinOptions {
