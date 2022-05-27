@@ -39,25 +39,24 @@ class TopStoriesRepositoryImpl @Inject constructor(
         return refresh
     }
 
-    // is this logic supposed to be here?
-    // SQL query vs. Kotlin filter ?
+    // cannot move this logic to usecase without accessing data:LocalArticle from the domain module
     override fun observeMostViewed(): Flow<List<Article>> =
-        topStoriesDao.getAllArticlesFlow().map {
-            it.filter {
+        topStoriesDao.getAllArticlesFlow().map { list ->
+            list.filter {
                 it.orderViewed != null
             }.mapToArticles()
         }
 
     override fun observeMostShared(): Flow<List<Article>> =
-        topStoriesDao.getAllArticlesFlow().map {
-            it.filter {
+        topStoriesDao.getAllArticlesFlow().map { list ->
+            list.filter {
                 it.orderShared != null
             }.mapToArticles()
         }
 
     override fun observeMostEmailed(): Flow<List<Article>> =
-        topStoriesDao.getAllArticlesFlow().map {
-            it.filter {
+        topStoriesDao.getAllArticlesFlow().map { list ->
+            list.filter {
                 it.orderEmailed != null
             }.mapToArticles()
         }

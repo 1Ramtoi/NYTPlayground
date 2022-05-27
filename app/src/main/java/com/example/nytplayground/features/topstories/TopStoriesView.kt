@@ -8,11 +8,16 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.toLowerCase
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.domain.features.model.Article
 import com.example.domain.features.model.TopStoriesSortBy
 import com.example.nytplayground.common.components.articles.ArticleCompactView
 import com.example.nytplayground.common.components.dropdown.TopBarDropdownFilter
+import com.google.accompanist.flowlayout.FlowCrossAxisAlignment
+import com.google.accompanist.flowlayout.FlowRow
+import com.google.accompanist.flowlayout.MainAxisAlignment
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
@@ -21,38 +26,16 @@ fun TopStoriesView(
     vm: TopStoriesViewModel,
     onSearch: () -> Unit
 ) {
-    // is this supposed to be here or in the viewmodel?
-    val sortBy = remember { mutableStateOf(TopStoriesSortBy.MOST_VIEWED) }
-
+//    val state by vm.state.collectAsState()
     val state by vm.state.collectAsState()
 
-    val isRefreshing by vm.isRefreshing.collectAsState()
-
-
-    fun listToDisplay(): List<Article> {
-        return when (sortBy.value) {
-            TopStoriesSortBy.MOST_VIEWED -> state.mostViewed
-            TopStoriesSortBy.MOST_SHARED -> state.mostShared
-            TopStoriesSortBy.MOST_EMAILED -> state.mostEmailed
-            else -> {
-                state.mostViewed
-            }
-        }
-    }
 
     fun refresh() {
-        when (sortBy.value) {
-            TopStoriesSortBy.MOST_VIEWED -> vm.refreshMostViewed()
-            TopStoriesSortBy.MOST_SHARED -> vm.refreshMostShared()
-            TopStoriesSortBy.MOST_EMAILED -> vm.refreshMostEmailed()
-            else -> {
-                vm.refreshMostViewed()
-            }
-        }
+        vm.refresh()
     }
 
     fun refreshIfEmpty() {
-        if (listToDisplay().isEmpty()) {
+        if (state.listToDisplay.isEmpty()) {
             refresh()
         }
     }
@@ -61,7 +44,7 @@ fun TopStoriesView(
         refreshIfEmpty()
     })
 
-    LaunchedEffect(key1 = listToDisplay(), block = {
+    LaunchedEffect(key1 = state.listToDisplay, block = {
         refreshIfEmpty()
     })
 
@@ -70,19 +53,27 @@ fun TopStoriesView(
         topBar = {
             TopAppBar(
                 title = {
-                    Text("Top Stories")
+                    FlowRow(crossAxisAlignment = FlowCrossAxisAlignment.Center) {
+                        Text("Top Stories ")
+                        Text(
+                            "(sorted by ${state.sortBy.toString().lowercase().replace('_', ' ')})",
+                            fontSize = 14.sp
+                        )
+                    }
                 },
                 actions = {
                     IconButton(onClick = { onSearch() }) {
                         Icon(imageVector = Icons.Default.Search, contentDescription = "Search")
                     }
-                    TopBarDropdownFilter(sortBy = sortBy)
+                    TopBarDropdownFilter(sortBy = state.sortBy, setSortBy = {
+                        vm.updateSortBy(it)
+                    })
                 }
             )
         },
         content = {
             SwipeRefresh(
-                state = rememberSwipeRefreshState(isRefreshing),
+                state = rememberSwipeRefreshState(state.isRefreshing),
                 onRefresh = { refresh() }) {
                 Column(
                     modifier = Modifier
@@ -90,7 +81,7 @@ fun TopStoriesView(
                         .fillMaxWidth()
                 ) {
                     LazyColumn(modifier = Modifier.fillMaxHeight()) {
-                        items(listToDisplay()) { article ->
+                        items(state.listToDisplay) { article ->
                             Row(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)) {
                                 ArticleCompactView(article = article)
                             }

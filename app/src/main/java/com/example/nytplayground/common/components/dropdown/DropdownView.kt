@@ -19,7 +19,8 @@ import com.example.domain.features.model.TopStoriesSortBy
 
 @Composable
 fun TopBarDropdownFilter(
-    sortBy: MutableState<TopStoriesSortBy>
+    sortBy: TopStoriesSortBy,
+    setSortBy: (TopStoriesSortBy) -> Unit
 ) {
     val expanded = remember { mutableStateOf(false) }
 
@@ -36,19 +37,20 @@ fun TopBarDropdownFilter(
     }
 
     DropdownMenu(expanded = expanded.value, onDismissRequest = { expanded.value = false }) {
-        DropdownMenuItem(onClick = { sortBy.value = TopStoriesSortBy.MOST_VIEWED }) {
+        DropdownMenuItem(onClick = {
+            setSortBy(TopStoriesSortBy.MOST_VIEWED) }) {
             Text(text = "most viewed")
         }
 
         Divider()
 
-        DropdownMenuItem(onClick = { sortBy.value = TopStoriesSortBy.MOST_SHARED }) {
+        DropdownMenuItem(onClick = { setSortBy(TopStoriesSortBy.MOST_SHARED) }) {
             Text(text = "most shared")
         }
 
         Divider()
 
-        DropdownMenuItem(onClick = { sortBy.value = TopStoriesSortBy.MOST_EMAILED }) {
+        DropdownMenuItem(onClick = { setSortBy(TopStoriesSortBy.MOST_EMAILED) }) {
             Text(text = "most emailed")
         }
     }

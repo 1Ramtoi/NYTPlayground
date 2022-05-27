@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.features.model.Article
 import com.example.domain.features.model.TopStoriesSortBy
+import com.example.domain.features.model.TopStoriesSortBy.*
 import com.example.domain.features.usecases.topstories.ObserveTopStoriesUseCase
 import com.example.domain.features.usecases.topstories.RefreshTopStoriesUseCase
 import com.example.domain.features.usecases.topstories.ReqeustTopStoriesUseCase
@@ -22,45 +23,63 @@ class TopStoriesViewModel @Inject constructor(
     private val refreshTopStoriesUseCase: RefreshTopStoriesUseCase
 ) : BaseViewModel<TopStoriesState, TopStoriesEvent>(TopStoriesState()) {
 
-    private val _isRefreshing = MutableStateFlow(false)
-    val isRefreshing: StateFlow<Boolean>
-        get() = _isRefreshing.asStateFlow()
-
     init {
-        observeTopStoriesUseCase.executeWithViewState(TopStoriesSortBy.MOST_VIEWED) { articleList ->
-            copy(mostViewed = articleList)
-        }
-        observeTopStoriesUseCase.executeWithViewState(TopStoriesSortBy.MOST_SHARED) { articleList ->
-            copy(mostShared = articleList)
-        }
-        observeTopStoriesUseCase.executeWithViewState(TopStoriesSortBy.MOST_EMAILED) { articleList ->
-            copy(mostEmailed = articleList)
-        }
-    }
-
-    fun refreshMostViewed() {
-        refreshTopStories(TopStoriesSortBy.MOST_VIEWED)
-    }
-
-    fun refreshMostShared() {
-        refreshTopStories(TopStoriesSortBy.MOST_SHARED)
-    }
-
-    fun refreshMostEmailed() {
-        refreshTopStories(TopStoriesSortBy.MOST_EMAILED)
-    }
-
-    private fun requestTopStories(
-        sortBy: TopStoriesSortBy,
-        observedList: MutableStateFlow<List<Article>>
-    ) {
-        viewModelScope.launch {
-            _isRefreshing.emit(true)
-            requestTopStoriesUseCase.invokeSuspend(sortBy).also {
-                observedList.emit(it) //this has to go
-                _isRefreshing.emit(false)
+        // this cannot be the optimal way of implementing this, no?
+        observeTopStoriesUseCase.executeWithViewState(MOST_VIEWED) { articleList ->
+            if (sortBy == MOST_VIEWED) {
+                copy(listToDisplay = articleList)
+            } else {
+                copy()
             }
         }
+        observeTopStoriesUseCase.executeWithViewState(MOST_SHARED) { articleList ->
+            if (sortBy == MOST_SHARED) {
+                copy(listToDisplay = articleList)
+            } else {
+                copy()
+            }
+        }
+        observeTopStoriesUseCase.executeWithViewState(MOST_EMAILED) { articleList ->
+            if (sortBy == MOST_EMAILED) {
+                copy(listToDisplay = articleList)
+            } else {
+                copy()
+            }
+        }
+
+        refresh()
+    }
+
+    fun updateSortBy(sortBy: TopStoriesSortBy) {
+        state.value.sortBy = sortBy
+        updateList(sortBy)
+    }
+
+    private fun updateList(sortBy: TopStoriesSortBy) {
+        // is this the way?
+        when (sortBy) {
+            MOST_VIEWED -> {
+                observeTopStoriesUseCase.executeWithViewState(MOST_VIEWED) { articleList ->
+                    copy(listToDisplay = articleList)
+                }
+            }
+            MOST_SHARED -> {
+                observeTopStoriesUseCase.executeWithViewState(MOST_SHARED) { articleList ->
+                    copy(listToDisplay = articleList)
+                }
+            }
+            MOST_EMAILED -> {
+                observeTopStoriesUseCase.executeWithViewState(MOST_EMAILED) { articleList ->
+                    copy(listToDisplay = articleList)
+                }
+            }
+        }
+    }
+
+
+    fun refresh() {
+        // is this the correct way of accessing the state's value?
+        refreshTopStories(state.value.sortBy)
     }
 
     private fun refreshTopStories(sortBy: TopStoriesSortBy) {

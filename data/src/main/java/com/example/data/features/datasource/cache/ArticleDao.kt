@@ -14,4 +14,7 @@ abstract class ArticleDao: BaseCoroutinesDao<LocalArticle>() {
 
     @Query("SELECT * FROM articles")
     abstract fun getAllArticlesFlow(): Flow<List<LocalArticle>>
+
+//    @Query("UPDATE articles SET ")
+//    abstract fun updateArticle(article: LocalArticle)
 }
