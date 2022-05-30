@@ -79,9 +79,7 @@ class TopStoriesRepositoryImpl @Inject constructor(
 //                localArticle.orderShared?.let {
 //                    refreshArticle
 //                }
-//
 //            }
-//
 //        }
 
         topStoriesDao.insertAllReplace(refresh.mapToLocalArticles(TopStoriesSortBy.MOST_SHARED))

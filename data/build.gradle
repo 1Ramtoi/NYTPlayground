@@ -31,4 +31,7 @@ dependencies {
 
     implementation room.values()
     kapt roomProcessing.values()
+
+    testImplementation kotlinTestDependencies.values()
+
 }
