@@ -16,3 +16,4 @@ abstract class FlowUseCase<T, in Params>  {
         return buildStream(params)
     }
 }
+

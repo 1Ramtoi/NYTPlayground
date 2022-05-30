@@ -43,6 +43,5 @@ open class BaseService {
         }.also {
             println("created new client instance")
         }
-
     }
 }

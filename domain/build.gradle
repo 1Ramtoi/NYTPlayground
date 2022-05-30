@@ -15,4 +15,7 @@ dependencies {
     kapt hiltProcessing.values()
     kapt daggerProcessing.values()
 
+
+    testImplementation kotlinTestDependencies.values()
+
 }

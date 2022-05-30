@@ -1,4 +1,4 @@
-package com.example.nytplayground.common.articles
+package com.example.nytplayground.common.components.articles
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable

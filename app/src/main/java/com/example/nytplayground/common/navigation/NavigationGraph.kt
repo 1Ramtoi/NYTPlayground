@@ -28,7 +28,7 @@ fun NavigationGraph() {
         }
 
         composable(Screen.TopStories.route) {
-            val topStoriesViewModel: TopStoriesViewModel = hiltViewModel<TopStoriesViewModel>()
+            val topStoriesViewModel: TopStoriesViewModel = hiltViewModel()
             TopStoriesView(vm = topStoriesViewModel, onSearch = {
                 navController.navigate(Screen.Search.route)
             })

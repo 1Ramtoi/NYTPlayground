@@ -7,12 +7,14 @@ buildscript {
 
     ext {
         composeVersion = '1.1.0'
-        daggerVersion = '2.41'
+        daggerVersion = '2.42'
     }
 
     dependencies {
         classpath "com.google.dagger:hilt-android-gradle-plugin:$daggerVersion"
-        classpath "org.jetbrains.kotlin:kotlin-serialization:1.6.10"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:1.6.21"
+        classpath 'com.squareup.sqldelight:gradle-plugin:1.5.3'
+
     }
 }
 
@@ -31,6 +33,7 @@ task clean(type: Delete) {
 
 allprojects {
     apply from: "$rootDir/base_dependencies.gradle"
+    apply from: "$rootDir/base_test_dependencies.gradle"
 
     tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
         kotlinOptions {
